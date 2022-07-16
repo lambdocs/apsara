@@ -1,14 +1,19 @@
-# apsara
+# Apsara
 
-A Clojure library designed to ... well, that part is up to you.
+Editor macros in [ClojureScript](http://github.com/clojure/clojurescript).
+
+Apsara is a ClojureScript library for building editors. It has been tested
+in browsers, but should work in any environment that exposes a
+[DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)
+like tree (like [React Native](https://reactnative.dev/)).
 
 ## Usage
 
-FIXME
+## Model
 
 ## License
 
-Copyright © 2022 FIXME
+Copyright © 2022 Ajay Mendez
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at
