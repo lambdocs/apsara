@@ -23,12 +23,12 @@ If a [REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop)
 loop only appends data to the bottom of the screen, then a REDL loop
 is capable of updating any part of the screen.
 
-1. READ
-As text is entered, input is read. This includes handling of non printable
+#### READ.
+As text is entered, input is read. This includes handling of non-printable
 characters like delete, or input from a mouse. The meaning of these
 inputs is determined in the next phase.
 
-2. EVALUATE
+#### EVALUATE.
 There are at least two levels of evaluation. First the evaluation of the
 particular input operation - like appending or deleting a character. Second,
 evaluation of the string input. Consider this JavaScript snippet.
@@ -41,7 +41,7 @@ the string against a set of regular expressions. But this is not the only
 way. On a console, for example, it could mean dispatching the string to
 a remote server. So whatever needs to be done here is context specific.
 
-3. Display
+#### DISPLAY.
 After the input is evaluated the display needs to be updated. Apsara's
 display component, also called the renderer, exposes a
 [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)
@@ -52,7 +52,7 @@ APIs. In the browser, the hiccup model is rendered as
 [React](https://reactjs.org/) components using the excellent
 [Reagent]() library.
 
-4. Loop
+#### LOOP.
 The loop ties everything together. Since Apsara is part of a larger
 application the loop is usually run by the hosting platform. For
 browser based applications the loop is part of the JavaScript
