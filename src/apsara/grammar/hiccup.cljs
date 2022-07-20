@@ -1,4 +1,4 @@
-(ns cljfun.editor.grammar.hiccup)
+(ns apsara.grammar.hiccup)
 
 ;; Hiccup's grammar is a subset of edn
 (def grammar
@@ -13,11 +13,12 @@
    <r-sq-paren> = <']'>
    keyword = <':'> alphanumeric
    <attributes> = map
-   <key-value> = [space] keyword space string [space]
+   <value> = string | number
+   <key-value> = [space] keyword space value [space]
    <nested-map> = [space] keyword space map
    map = <'{'> (nested-map | key-value)* <'}'>
    <children> = (hiccup* | string)
-   <special-characters> = ('!' | '#' | '$' | '.' | ',' | ':' | '/' | '<' | '>' | '{' | '}')
+   <special-characters> = ('!' | '#' | '$' | '.' | ',' | ':' | '/' | '<' | '>' | '{' | '}' | '_' | '-')
    <character> = ( alphabet | number | string-space | special-characters )
    mixed-string = character-sequence
    <character-sequence> = character*
