@@ -7,7 +7,7 @@ in browsers, but should work in any environment that exposes a
 [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)
 like tree (like [React Native](https://reactnative.dev/)).
 
-[![Clojars Project](https://img.shields.io/clojars/v/net.clojars.ajaym/apsara.svg?include_prereleases)] (https://clojars.org/net.clojars.ajaym/apsara)
+[![Clojars Project](https://img.shields.io/clojars/v/net.clojars.ajaym/apsara.svg?include_prereleases)](https://clojars.org/net.clojars.ajaym/apsara)
 
 ## Yet Another ...
 There are many editors out there, so why another one? While other editors are
