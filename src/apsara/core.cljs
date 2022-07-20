@@ -11,19 +11,19 @@
    [apsara.parser :as parser]
    [apsara.implementation :as impl]))
 
-(defn display-spec [s]
+(defn display-spec
   "Display the spec"
+  [s]
   ;; [:div (impl/editor-maker defaults/default-config @vdom/spec)])
   (renderer/styled-hiccup s))
 
 (defn main-editor []
-  "Return an outer level editor"
   [:div
-   [:div (impl/editor-maker defaults/default-config @vdom/spec)]
-   [:div (cursor/display-spec)]
-   [:div.container [display-spec @vdom/spec]]])
+   [:div (impl/editor-maker defaults/default-config @vdom/spec)]])
+   ;; [:div (cursor/display-spec)]
+   ;; [:div.container [display-spec @vdom/spec]]])
 
-(defn init []
+(defn init-bak []
   (vdom/reset-id-counter!)
   (vdom/reset-spec!)
   (let [para1 (vdom/add-node! nil [:para] nil)]
@@ -44,8 +44,15 @@
       (vdom/add-node! para [:button [:text "click me!"]]))
       ))
 
+(defn init []
+  (vdom/reset-id-counter!)
+  (vdom/reset-spec!)
+  (let [para1 (vdom/add-node! nil [:para])
+        para2 (vdom/add-node! para1 [:para])]
+    (vdom/add-node! para2 [:text "Hello World!"])))
+
 ;; Initialize editor state
-;; (init)
+(init)
 
 (def test-cases
   [[:para [:text "Hello World!"]]
