@@ -7,6 +7,8 @@ in browsers, but should work in any environment that exposes a
 [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)
 like tree (like [React Native](https://reactnative.dev/)).
 
+[![Clojars Project](https://img.shields.io/clojars/v/net.clojars.ajaym/apsara.svg?include_prereleases)] (https://clojars.org/net.clojars.ajaym/apsara)
+
 ## Yet Another ...
 There are many editors out there, so why another one? While other editors are
 stand alone applications Apsara is a library meant to be embedded in an
@@ -15,7 +17,15 @@ Programming documents](https://www-cs-faculty.stanford.edu/~knuth/lp.html)
 to name a few.
 
 ## Usage
-TBD
+The simplest way to use Apsara is install it with
+[Reagent](https://github.com/reagent-project/reagent#usage).
+``` sh
+lein new reagent myproject
+```
+Then add Apsara as a dependecy in project.clj.
+``` clojure
+[net.clojars.ajaym/apsara "0.1.0"]
+```
 
 ## Design
 ### REDL - Read Evaluate Display Loop
@@ -35,7 +45,7 @@ evaluation of the string input. Consider this JavaScript snippet.
 ``` javascript
 ar.map((t) => t.true ? 1 : 0).reduce((total, num) => total + num);
 ```
-If the editor is required to highlight the syntax then it is required to
+If the editor needs to highlight the syntax then it is required to
 _understand_ JavaScript in some way. Ususally this is done by matching
 the string against a set of regular expressions. But this is not the only
 way. On a console, for example, it could mean dispatching the string to
@@ -58,7 +68,7 @@ application the loop is usually run by the hosting platform. For
 browser based applications the loop is part of the JavaScript
 evaluation.
 
-### Empty Shell
+### A Shell
 All parts of REDL can be swapped making Apsara's core very small. If
 there is one thing that is novel about Apsara, it is the formalization
 of the idea that editors can be built from these four parts. 
