@@ -8,6 +8,7 @@
    [apsara.vdom :as vdom]
    [apsara.renderer :as renderer]
    [apsara.defaults :as defaults]
+   [apsara.plugins.tailwind.config :as tailwind]
    [apsara.parser :as parser]
    [apsara.implementation :as impl]))
 
