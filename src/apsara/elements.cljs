@@ -9,7 +9,7 @@
         {id :id} attr
         attr-printable (dissoc attr :parent :id)
         node-printable (into [(vdom/tag node) attr-printable] (vdom/children node))
-        new-node [:text (pr-str node-printable)]]
+        new-node [:Text (pr-str node-printable)]]
     (vdom/replace-node! id new-node)
     [:span]))
 
@@ -65,7 +65,7 @@
    ;; https://developer.mozilla.org/en-US/docs/Web/HTML/Inline_elements
    :style {:transform #(style %1) :type "inline"}
    :escape {:transform #(stringify %1) :type "inline"}
-   :text {:transform #(assoc %1 0 :span) :type "inline"}
+   :Text {:transform #(assoc %1 0 :span) :type "inline"}
    :highlight {:transform #(assoc %1 0 :span) :type "inline"}
    :bold {:transform #(assoc %1 0 :b) :type "inline"}
    :break {:transform #(assoc %1 0 :br) :type "inline"}

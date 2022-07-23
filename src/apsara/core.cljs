@@ -19,50 +19,28 @@
 
 (defn main-editor []
   [:div
-   [:div (impl/editor-maker defaults/default-config @vdom/spec)]])
+   [:div (impl/editor-maker tailwind/tailwind-config @vdom/spec)]
+   [:div.container [display-spec @vdom/spec]]])
    ;; [:div (cursor/display-spec)]
-   ;; [:div.container [display-spec @vdom/spec]]])
-
-(defn init-bak []
-  (vdom/reset-id-counter!)
-  (vdom/reset-spec!)
-  (let [para1 (vdom/add-node! nil [:para] nil)]
-    (vdom/add-node! para1 [:text "Hello World!"] nil)
-    ;; (vdom/add-node! para1 [:editor ] nil)
-    (let [para2 (vdom/add-node! para1 [:para] nil)]
-      (vdom/add-node! para2 [:text "Some plain text"] nil)
-      (vdom/add-node! para2 [:italic ", some in italic"] nil)
-      (vdom/add-node! para2 [:bold ", some in bold and "] nil)
-      (vdom/add-node! para2 [:strike "some stricken out"] nil))
-    (let [para3 (vdom/add-node! para1 [:para] nil)]
-      (vdom/add-node! para3 [:text  "Some text "] nil)
-      (vdom/add-node! para3 [:text {:style {:color "red"}} "in red, "] nil)
-      (vdom/add-node! para3 [:text {:style {:color "green"}} "green, "] nil)
-      (vdom/add-node! para3 [:text {:style {:color "blue"}} "and blue."] nil))
-    (let [para (vdom/add-node! para1 [:para])]
-      (vdom/add-node! para [:quote  "This is a block"] nil)
-      (vdom/add-node! para [:button [:text "click me!"]]))
-      ))
 
 (defn init []
   (vdom/reset-id-counter!)
   (vdom/reset-spec!)
-  (let [para1 (vdom/add-node! nil [:para])
-        para2 (vdom/add-node! para1 [:para])]
-    (vdom/add-node! para2 [:text "Hello World!"])))
-
-;; Initialize editor state
+  (let [para1 (vdom/add-node! nil [:Para])
+        para2 (vdom/add-node! para1 [:Para])]
+    (vdom/add-node! para2 [:Text "Hello World!"])))
 (init)
 
+;; Initialize editor state
 (def test-cases
-  [[:para [:text "Hello World!"]]
+  [[:para [:Text "Hello World!"]]
    [:para "Some text " [:bold "in bold "] [:italic ", italic"] " and " [:strike "strike through"]]
    [:para
     "Some text "
-    [:text {:style.color "red"} "in red, "]
-    [:text {:style {:color "green"}} "green, "]
+    [:Text {:style.color "red"} "in red, "]
+    [:Text {:style {:color "green"}} "green, "]
     "and "
-    [:text {:style {:color "blue"}} "blue!"]]
+    [:Text {:style {:color "blue"}} "blue!"]]
    [:para "Some text " [:break] "with a line break" [:break]  "or two"]
    [:para "We love to be the 1" [:super "st"] " to support superscript and subscript X" [:sub "1"]]
    [[:h1 "Heading1"] [:h2 "Heading2"] [:h3 "Heading 3"] [:h4 "heading4"] [:h5 "heading5"]]

@@ -12,7 +12,7 @@
   node when the user clicks on a corresponding DOM element.
   For these cases, using zippers, we would have to search
   the tree for the given element, an O(log n) operation."
-  (r/atom [:para {:parent nil :id 0}]))
+  (r/atom [:Para {:parent nil :id 0}]))
 (def spec-list [])
 (def node-lookup
   "To speed up random access to the tree we have this lookup
@@ -302,7 +302,7 @@
   (let [node (node-from-id id)]
     (cond
       (leaf? node) (nth-child node 0)
-      ;; (= (tag node) :para) "\n"
+      ;; (= (tag node) :Para) "\n"
       :else "")))
 
 (defn rightmost-child-of

@@ -23,9 +23,9 @@
          :keyword (fn [& s] (keyword (reduce str s)))
          :string str
          :map (fn [& args] (seq-to-map args))
-         :mixed-string (fn [& args] (vector :text (apply str args)))
+         :mixed-string (fn [& args] (vector :Text (apply str args)))
          :mixed-hiccup (fn [& args] args)
-         :instaparse/failure #(vector :text %1)})))
+         :instaparse/failure #(vector :Text %1)})))
 
 (defn parse-impl [txt]
   "If the user enters hiccup in the editor, then parse"
