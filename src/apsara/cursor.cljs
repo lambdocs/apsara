@@ -1,7 +1,6 @@
 (ns apsara.cursor
   (:require
    [reagent.core :as r]
-   [clojure.string :as string]
    [apsara.vdom :as vdom]))
 
 ;; Cursor and selection
@@ -77,11 +76,13 @@
 (defn delete-char-at [id offset]
   "Delete char in node(id) at offset."
   (let [{length :length} (current-cursor)]
-    (println id offset length)
+    ;; (println id offset length)
     (if (= length 1)
       (let [left-id (vdom/left-of id)
-            left-len (vdom/strlen left-id)]
+            left-len (vdom/strlen left-id)
+            parent (vdom/parent-of (vdom/node-from-id id))]
         (vdom/remove-node! id)
+        (and (= (count (vdom/children parent)) 1) (vdom/remove-node! (vdom/picljid parent)))
         (set-cursor-pessimistic left-id left-len))
       (let []
         (vdom/delete-char-at! id offset)
@@ -132,7 +133,7 @@
         grandparent (vdom/parent-of parent)
         right-node (vdom/nth-child grandparent (+ (vdom/index-of parent) 1))
         new-parent-id (vdom/add-node! (vdom/picljid grandparent)
-                                      [:para {:height 25}]
+                                      [:Para]
                                       (vdom/picljid right-node))]
     ;; (println right-node new-parent-id)
     (vdom/transplant! (last part) new-parent-id)
