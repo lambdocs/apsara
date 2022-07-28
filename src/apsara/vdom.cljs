@@ -94,11 +94,16 @@
   (children? node) returns true even if there are child strings, (not (leaf? node))
   returns true if there is a child vector."
   [node]
+  (and (not (attr? node))  nil)
   (if (attr? node)
-    (let [t (type (nth node 2))]
-      (and (not= t cljs.core/PersistentVector) (not= t cljs.core/Subvec)))
-    (let [t (type (nth node 1))]
-      (and (not= t cljs.core/PersistentVector) (not= t cljs.core/Subvec)))))
+    (if (< (count node) 3)
+      nil
+      (let [t (type (nth node 2))]
+        (and (not= t cljs.core/PersistentVector) (not= t cljs.core/Subvec))))
+    (if (< (count node) 2)
+      nil
+      (let [t (type (nth node 1))]
+        (and (not= t cljs.core/PersistentVector) (not= t cljs.core/Subvec))))))
 
 (defn with-attr
   "Merges nattr to node's attributes."
@@ -108,12 +113,12 @@
     (into (subvec node 0 1) (into [nattr] (rest node)))))
 
 (defn node-from-id
-  "Return the node with given picljid"
+  "Return the node with given apsaraid"
   [id]
   (get @node-lookup id))
 
 (defn picljid
-  "Return the piclj id for a given node"
+  "Return the apsara id for a given node"
   [node]
   (if node
     (get (attr node) :id)
@@ -381,8 +386,8 @@
    return a single <space>."
   [s offset]
   (cond
-    (= offset 0) ["_" s]
-    (= offset (count s)) [s "_"]
+    (= offset 0) [" " s]
+    (= offset (count s)) [s " "]
     :else [(subs s 0 offset) (subs s offset (count s))]))
 
 (defn- split-node
