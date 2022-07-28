@@ -7,13 +7,15 @@
 (def selection (r/atom nil))
 (def cursor (r/atom nil))
 
-(defn container-from-id [id]
+(defn container-from-id
   "Return the dom container for node."
+  [id]
   (. (. js/document getElementById id) -lastChild))
 
 ;; Cursor functions
-(defn current-cursor []
+(defn current-cursor
   "Get params related to current cursor position."
+  []
   (if (= @selection nil)
     {:range nil :container nil :offset 0 :id -1 :length 0}
     (let [range (. @selection (getRangeAt 0))
@@ -45,17 +47,17 @@
 (defn set-selection []
   "Called from mouse click events."
   (let [sel (. js/window getSelection)]
-    (. js/console log sel)
+    ;; (. js/console log sel)
     (reset! selection sel)
     (reset! cursor (current-cursor))))
 
 (defn set-selection-left-of [id]
   "Set selection to a range to the left of id."
   (let [left-id (vdom/left-of id)
-        offset (- (vdom/strlen left-id) 1)]
+        offset (vdom/strlen left-id)]
     (set-cursor left-id offset)))
 
-(defn move-cursor-left [count]
+(defn move-cursor-left []
   "Move cursor count characters to the left."
   (let [{offset :offset id :id} (current-cursor)]
     (if (> offset 0)
@@ -66,10 +68,10 @@
   "Set selection to a range to the left of id."
      (set-cursor (vdom/right-of id) 0))
 
-(defn move-cursor-right [count]
+(defn move-cursor-right []
   "Move cursor count characters to the right."
   (let [{offset :offset length :length id :id} (current-cursor)]
-    (if (< offset (dec length))
+    (if (< offset length)
       (set-cursor id (inc offset))
       (set-selection-right-of id))))
 
@@ -91,7 +93,7 @@
 (defn backspace []
   "Delete 1 char to the left."
   (let [{id :id offset :offset length :length} (current-cursor)]
-    (println "backspace" id offset length)
+    ;; (println "backspace" id offset length)
     (if (> offset 0)
       (delete-char-at id (dec offset))
       (let [left-id (vdom/left-of id)
@@ -101,7 +103,7 @@
 (defn delete []
   "Delete 1 char to the right of."
     (let [{id :id offset :offset length :length} (current-cursor)]
-      (println offset length)
+      ;; (println offset length)
       (if (<= offset (dec length))
         (delete-char-at id offset)
         (let []
@@ -109,7 +111,7 @@
 
 (defn set-cursor-timed [id offset ms]
   "Call set-cursor after ms milliseconds."
-  (println "set-cursor-timed" id offset)
+  ;; (println "set-cursor-timed" id offset)
   (js/setTimeout #(set-cursor id offset) ms))
 
 (defn emit [key]
@@ -140,8 +142,3 @@
     (vdom/add-node! (vdom/picljid parent) (last (first part)))
     (set-cursor-timed (vdom/leftmost-child-of new-parent-id) 0 100)))
     ;; (set-cursor-pessimistic new-parent-id 0)))
-
-(defn display-spec []
-  "Display the spec"
-  [:section.section>div.container>div.content
-   [:span (str (vdom/node-from-id (:id @cursor)))]])
