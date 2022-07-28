@@ -18,11 +18,27 @@
   ;; [:div (impl/editor-maker defaults/default-config @vdom/spec)])
   (renderer/styled-hiccup s))
 
+(defn display-code
+  "Display the spec"
+  [cursor]
+  [:section.section>div.container>div.content
+   [:span (str (vdom/node-from-id (:id cursor)))]])
+
+(defn tabs
+  "Tabs"
+  [args]
+  [:div {:class "grid sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 pt-3"}
+   (for [item args]
+     ^{:key (:title item)} [:div (:render item)])])
+
 (defn main-editor []
-  [:div
-   [:div (impl/editor-maker tailwind/tailwind-config @vdom/spec)]
-   [:div.container [display-spec @vdom/spec]]])
-   ;; [:div (cursor/display-spec)]
+  [:div {:class "container"}
+   [:div {:class "flex flex-col"}
+    [:div (impl/editor-maker tailwind/tailwind-config @vdom/spec)]
+    [tabs [{:title "title1"
+            :render (display-code @cursor/cursor)}
+           {:title "title 1"
+            :render (display-spec @vdom/spec)}]]]])
 
 (defn init []
   (vdom/reset-id-counter!)
