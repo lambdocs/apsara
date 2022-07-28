@@ -96,15 +96,24 @@
   [node]
   (let [blocks (filterv block? (vdom/children node))
         inlines (filterv #(not (block? %1)) (vdom/children node))]
-    (println blocks inlines)
     (-> [:div {:class "flex flex-col"}] ;; outer :div
         (into (or blocks nil))
-        (into [(into [:div {:class "flex flex-row bg-slate-100"}] inlines)]))))
+        (into [(into [:div {:class "flex flex-row text-neutral-800 whitespace-pre"}] inlines)]))))
 
 (defn- Text
   "Render a text element. By default preserve white spaces."
   [node]
-  (transform node {:tag :span :attr {:class "whitespace-pre"}}))
+  (transform node {:tag :span :attr {}}))
+
+(defn- Button
+  "Render a button."
+  [node]
+  (transform node
+             {:tag :button
+              :attr {:class "text-white bg-sky-600 hover:bg-sky-400
+                             rounded-lg text-sm px-5 py-2.5 mr-2
+                             focus:outline-none"}
+              }))
 
 (def supported-elements
   ^{:doc "Aliases mapped to DOM elements that take the form:
@@ -159,23 +168,65 @@
                                    {:tag :p
                                     :attr {:class "italic"}})
           :type "inline"}
-   :Strike {:transform #(assoc %1 0 :s) :type "inline"}
+   :Strike {:transform #(transform %1
+                                   {:tag :span
+                                    :attr {:class "line-through decoration-red-500"}}) :type "inline"}
+   :Underline {:transform #(transform %1
+                                      {:tag :span
+                                       :attr {:class "underline decoration-sky-500"}}) :type "inline"}
    :s {:transform #(identity %1) :type "inline"}
    :Super {:transform #(assoc %1 0 :sup) :type "inline"}
    :sup {:transform #(identity %1) :type "inline"}
    :sub {:transform #(identity %1) :type "inline"}
    :a {:transform #(identity %1) :type "inline"}
    :abbr {:transform #(identity %1) :type "inline"}
-   :acronym {:transform #(identity %1) :type "inline"}
+   ;; :acronym {:transform #(identity %1) :type "inline"}
    :audio {:transform #(identity %1) :type "inline"}
    :bdi {:transform #(identity %1) :type "inline"}
    :bdo {:transform #(identity %1) :type "inline"}
    :big {:transform #(identity %1) :type "inline"}
    :button {:transform #(identity %1) :type "inline"}
+   :Button {:transform Button :type "inline"}
    :canvas {:transform #(identity %1) :type "inline"}
    :cite {:transform #(identity %1) :type "inline"}
    :code {:transform #(identity %1) :type "inline"}
+   :data {:transform #(identity %1) :type "inline"}
+   :datalist {:transform #(identity %1) :type "inline"}
+   :del {:transform #(identity %1) :type "inline"}
+   :dfn {:transform #(identity %1) :type "inline"}
+   :em {:transform #(identity %1) :type "inline"}
+   :embed {:transform #(identity %1) :type "inline"}
+   :iframe {:transform #(identity %1) :type "inline"}
    :img {:transform #(identity %1) :type "inline"}
+   :input {:transform #(identity %1) :type "inline"}
+   :ins {:transform #(identity %1) :type "inline"}
+   :kbd {:transform #(identity %1) :type "inline"}
+   :label {:transform #(identity %1) :type "inline"}
+   :map {:transform #(identity %1) :type "inline"}
+   :mark {:transform #(identity %1) :type "inline"}
+   :meter {:transform #(identity %1) :type "inline"}
+   :noscript {:transform #(identity %1) :type "inline"}
+   :object {:transform #(identity %1) :type "inline"}
+   :output {:transform #(identity %1) :type "inline"}
+   :picture {:transform #(identity %1) :type "inline"}
+   :progress {:transform #(identity %1) :type "inline"}
+   :q {:transform #(identity %1) :type "inline"}
+   :ruby {:transform #(identity %1) :type "inline"}
+   :samp {:transform #(identity %1) :type "inline"}
+   ;; :script {:transform #(identity %1) :type "inline"}
+   :select {:transform #(identity %1) :type "inline"}
+   :slot {:transform #(identity %1) :type "inline"}
+   :small {:transform #(identity %1) :type "inline"}
+   :strong {:transform #(identity %1) :type "inline"}
+   :svg {:transform #(identity %1) :type "inline"}
+   :template {:transform #(identity %1) :type "inline"}
+   :textarea {:transform #(identity %1) :type "inline"}
+   :time {:transform #(identity %1) :type "inline"}
+   :u {:transform #(identity %1) :type "inline"}
+   :tt {:transform #(identity %1) :type "inline"}
+   :var {:transform #(identity %1) :type "inline"}
+   :video {:transform #(identity %1) :type "inline"}
+   :wbr {:transform #(identity %1) :type "inline"}
    })
 
 (defn- compile-node [node]
