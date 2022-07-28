@@ -11,8 +11,8 @@
 (def default-key-dispatch
   {
    ;; Navigation keys
-   "ArrowRight" #() ;; Browser does its thing
-   "ArrowLeft" #() ;; Browser does its thing
+   "ArrowRight" (fn [event] (prevent-default event) (cursor/move-cursor-right))
+   "ArrowLeft" (fn [event] (prevent-default event) (cursor/move-cursor-left))
    "ArrowDown" #() ;; Browser does its thing
    "ArrowUp" #() ;; Browser does its thing
    "End" #() ;; Browser does its thing
